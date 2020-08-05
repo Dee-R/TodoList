@@ -28,9 +28,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="1k9-Tk-AB8"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -43,12 +40,19 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="TodoList" id="4k4-2F-vHj">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="QGa-vx-zRf"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="QGa-vx-zRf" userLabel="Add">
+                            <connections>
+                                <action selector="actionAddTodo:" destination="BYZ-38-t0r" id="tnc-MS-IT2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="t9l-Bv-Hsc" id="A3v-Q9-4l3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1057" y="138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="atV-OQ-mOD">
@@ -67,6 +71,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JvZ-JJ-DPC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="3xc-Gc-Grr">
+            <objects>
+                <viewController storyboardIdentifier="DetailViewController" id="BoI-0B-fPr" customClass="DetailViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kVD-wZ-KrM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkP-QO-9GU">
+                                <rect key="frame" x="20" y="44" width="374" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="PIh-3w-vVp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="todo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H0A-nb-ShD">
+                                <rect key="frame" x="20" y="85" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9X-DP-RcU">
+                                <rect key="frame" x="20" y="127" width="374" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="g13-Sh-Gdq"/>
+                                </constraints>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="actionSave:" destination="BoI-0B-fPr" eventType="touchUpInside" id="4fg-fZ-JDq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="nkP-QO-9GU" firstAttribute="trailing" secondItem="kVD-wZ-KrM" secondAttribute="trailingMargin" id="4vk-q1-DSy"/>
+                            <constraint firstItem="nkP-QO-9GU" firstAttribute="leading" secondItem="kVD-wZ-KrM" secondAttribute="leadingMargin" id="6Yr-Pn-LM1"/>
+                            <constraint firstItem="b9X-DP-RcU" firstAttribute="top" secondItem="H0A-nb-ShD" secondAttribute="bottom" constant="8" id="Jnc-64-mj1"/>
+                            <constraint firstItem="H0A-nb-ShD" firstAttribute="top" secondItem="nkP-QO-9GU" secondAttribute="bottom" constant="8" id="Llq-Yq-Jhf"/>
+                            <constraint firstItem="H0A-nb-ShD" firstAttribute="trailing" secondItem="nkP-QO-9GU" secondAttribute="trailing" id="djO-R6-yjn"/>
+                            <constraint firstItem="b9X-DP-RcU" firstAttribute="trailing" secondItem="H0A-nb-ShD" secondAttribute="trailing" id="nJe-kb-mI9"/>
+                            <constraint firstItem="nkP-QO-9GU" firstAttribute="top" secondItem="EeY-xt-whe" secondAttribute="top" id="oWZ-iZ-KWD"/>
+                            <constraint firstItem="H0A-nb-ShD" firstAttribute="leading" secondItem="nkP-QO-9GU" secondAttribute="leading" id="qqQ-Vh-Khe"/>
+                            <constraint firstItem="b9X-DP-RcU" firstAttribute="leading" secondItem="H0A-nb-ShD" secondAttribute="leading" id="u3F-jd-QYR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EeY-xt-whe"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GVo-cy-G27"/>
+                    <connections>
+                        <outlet property="buttonSave" destination="b9X-DP-RcU" id="k1u-Oj-iID"/>
+                        <outlet property="titleTodo" destination="H0A-nb-ShD" id="rEM-bd-xqT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cz3-v3-bVE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1882.608695652174" y="147.99107142857142"/>
         </scene>
     </scenes>
     <resources>
