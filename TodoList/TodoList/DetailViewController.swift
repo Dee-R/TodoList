@@ -37,7 +37,12 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
   }
   @IBAction func actionSave(_ sender: Any) {
     navigationController?.popViewController(animated: true)
-    delegateTapSave.didTapForSave(title: "title")
-    dismiss(animated: true, completion: nil)
+    if let title = titleTodo.text {
+        delegateTapSave.didTapForSave(title: title )
+        dismiss(animated: true, completion: nil)
+    } else {
+      delegateTapSave.didTapForSave(title: "" )
+      dismiss(animated: true, completion: nil)
+    }
   }
 }

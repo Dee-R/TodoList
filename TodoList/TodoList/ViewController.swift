@@ -8,6 +8,7 @@
  
 import UIKit
 
+// Model
 struct ModelT {
   let title:String!
 //  let id:String!
@@ -18,14 +19,8 @@ struct ModelT {
   }
 }
 
-class ViewController: UIViewController, UITableViewDataSource, TapSaveDelegate {
-  func didTapForSave(title: String) {
-    todoList.append(ModelT(title: title))
-    tableView.reloadData()
-  }
-  
+class ViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
-  
   var todoList = [
     ModelT(title: "One"),
     ModelT(title: "Two"),
@@ -35,21 +30,44 @@ class ViewController: UIViewController, UITableViewDataSource, TapSaveDelegate {
     super.viewDidLoad()
     tableView.dataSource = self
   }
+  
+  // Action
   @IBAction func actionAdd(_ sender: Any) {
     let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
     print(vc)
     vc.delegateTapSave = self
     present(vc, animated: true, completion: nil)
   }
-  
+}
+
+extension ViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return todoList.count
   }
-  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = todoList[indexPath.row].title
     print("cell", cell)
     return cell
+  }
+}
+
+extension ViewController: TapSaveDelegate {
+  func didTapForSave(title: String) {
+    todoList.append(ModelT(title: title))
+    tableView.reloadData()
+  }
+}
+
+extension ViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if (editingStyle == UITableViewCell.EditingStyle.delete) {
+      //
+      print("██░░░ -- L\(#line) ⭐️⭐️ delete ⭐️⭐️\n")
+      todoList.remove(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+//      todos.removeAtIndex(indexPath.row)
+//      tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+    }
   }
 }
