@@ -99,7 +99,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Task" id="Kqn-yo-Mue">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="D2I-MU-gHR"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="Wms-cG-o5b"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="Wms-cG-o5b">
+                            <connections>
+                                <segue destination="AMA-w6-iEY" kind="unwind" unwindAction="unwindToTaskListWithSender:" id="WPx-oZ-XeZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="nameTextField" destination="CKz-pk-K2X" id="hnT-jH-uzH"/>
@@ -107,6 +111,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayN-cr-ztN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="AMA-w6-iEY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3764" y="136.28185907046478"/>
         </scene>
