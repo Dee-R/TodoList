@@ -103,6 +103,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="nameTextField" destination="CKz-pk-K2X" id="hnT-jH-uzH"/>
+                        <outlet property="saveButton" destination="Wms-cG-o5b" id="rjW-1P-QjC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayN-cr-ztN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
