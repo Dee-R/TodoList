@@ -26,6 +26,15 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
     nameTextField.delegate = self
+    
+    // edit all the field if edit
+    if let task = task {
+      print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
+      os_log("edit variableTask on text field and title navigation bar", log: OSLog.default, type: .debug)
+      navigationItem.title = task.name
+      nameTextField.text = task.name
+    }
+    
     updateSaveButtonState()
   }
   

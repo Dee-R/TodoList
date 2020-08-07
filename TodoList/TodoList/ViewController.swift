@@ -31,10 +31,22 @@ class ViewController:UIViewController {
   
   // MARK: - Actions
   @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
+    
+    // edit mode
+    
+    
     if let sourceViewController = sender.source as? TaskViewController, let task = sourceViewController.task {
-      let newIndexPath = IndexPath(row: tasks.count, section: 0)
-      tasks.append(task)
-      tableView.insertRows(at: [newIndexPath], with: UITableView.RowAnimation.automatic)
+      if let selectedIndexPath = tableView.indexPathForSelectedRow {
+      //      print("  💟🐝\(#line)💟▓▒░ selectedIndexPath ░▒▓💟",selectedIndexPath.row,"💟")
+        tasks[selectedIndexPath.row] = task
+        tableView.reloadRows(at: [selectedIndexPath], with: UITableView.RowAnimation.none)
+      } else {
+          let newIndexPath = IndexPath(row: tasks.count, section: 0)
+          tasks.append(task)
+          tableView.insertRows(at: [newIndexPath], with: UITableView.RowAnimation.automatic)
+      }
+      
+      
     }
   }
   
@@ -59,7 +71,7 @@ class ViewController:UIViewController {
       }
       
       let selectedTask = tasks[indexPath.row]
-      taskDetailsViewController.task = selectedTask
+      taskDetailsViewController.task = selectedTask // send all information about the row on edit operation to TaskViewController in the var 'task'.
     
     default:
       fatalError("Segue Identification is nil")
