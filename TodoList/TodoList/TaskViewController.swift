@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class TaskViewController: UIViewController {
+class TaskViewController: UIViewController, UITextFieldDelegate {
   
   // MARK: - Properties
   @IBOutlet weak var nameTextField: UITextField!
@@ -20,6 +20,8 @@ class TaskViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
+    nameTextField.delegate = self
+    updateSaveButtonState()
   }
   
   // MARK: - Navigation
@@ -39,4 +41,26 @@ class TaskViewController: UIViewController {
     // set the task to be passed to ViewController after the unwind segue.
     task = Task(name: name)
   }
+  
+  public func textFieldDidBeginEditing(_ textField: UITextField) {
+    os_log("begind", log: OSLog.default, type: .debug)
+    saveButton.isEnabled = false
+  }
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    updateSaveButtonState()
+    navigationItem.title = textField.text
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+  
+  private func updateSaveButtonState() {
+    // Disable the save button if the text fields is empty
+    let text = nameTextField.text ?? ""
+    saveButton.isEnabled = !text.isEmpty
+  }
 }
+
+

@@ -29,17 +29,13 @@ class ViewController:UIViewController {
   }
   
   // MARK: - Actions
-//  @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
-  
   @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
-//    var tmpTask:Task?
+
     if let sourceViewController = sender.source as? TaskViewController, let task = sourceViewController.task {
       let newIndexPath = IndexPath(row: tasks.count, section: 0)
       tasks.append(task)
       tableView.insertRows(at: [newIndexPath], with: UITableView.RowAnimation.automatic)
     }
-    
-    
   }
 }
 

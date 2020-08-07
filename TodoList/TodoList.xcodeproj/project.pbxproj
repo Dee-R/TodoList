@@ -46,7 +46,6 @@
 		93F441EC24DAF48E00322EB6 = {
 			isa = PBXGroup;
 			children = (
-				93FFBDB924DD848800BEAB22 /* TaskViewController.swift */,
 				93F441F724DAF48E00322EB6 /* TodoList */,
 				93F441F624DAF48E00322EB6 /* Products */,
 			);
@@ -63,6 +62,7 @@
 		93F441F724DAF48E00322EB6 /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				93FFBDB924DD848800BEAB22 /* TaskViewController.swift */,
 				93F441F824DAF48E00322EB6 /* AppDelegate.swift */,
 				93F441FA24DAF48E00322EB6 /* SceneDelegate.swift */,
 				93F441FC24DAF48E00322EB6 /* ViewController.swift */,
