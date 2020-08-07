@@ -16,6 +16,9 @@ class ViewController:UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     loadSampleMeals()
+    
+    // edit button item provided by the table viewController
+    navigationItem.leftBarButtonItem = editButtonItem
   }
   
   // MARK: - Private methods
@@ -92,5 +95,24 @@ extension ViewController: UITableViewDataSource {
     let task = tasks[indexPath.row]
     cell.nameLabel.text = task.name
     return cell
+  }
+}
+
+extension ViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      // Delete the row
+      tasks.remove(at: indexPath.row)
+      tableView.deleteRows(at: [indexPath], with: .fade)
+     
+    } else if editingStyle == .insert {
+      // create a new instance of the appropiate class, insert it into the array and ad a new row to the table.
+      
+    }
+  }
+  
+  
+  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    return true
   }
 }
