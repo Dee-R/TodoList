@@ -8,66 +8,40 @@
  
 import UIKit
 
-// Model
-struct ModelT {
-  let title:String!
-//  let id:String!
-//  let uuid = NSUUID().uuidString
-  init(title:String) {
-//    self.id = uuid
-    self.title = title
-  }
-}
-
-class ViewController: UIViewController {
+class ViewController:UIViewController {
   @IBOutlet weak var tableView: UITableView!
-  var todoList = [
-    ModelT(title: "One"),
-    ModelT(title: "Two"),
-    ModelT(title: "Three")
-  ]
+  var tasks = [Task]()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.dataSource = self
+    loadSampleMeals()
   }
   
-  // Action
-  @IBAction func actionAdd(_ sender: Any) {
-    let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-    print(vc)
-    vc.delegateTapSave = self
-    present(vc, animated: true, completion: nil)
+  // MARK: - Private methods
+  private func loadSampleMeals() {
+    guard let task1 = Task(name: "Clean the room") else {
+      fatalError("Unable to instantiate task1")
+    }
+    guard let task2 = Task(name: "Buy some food") else {
+      fatalError("Unable to instantiate task2")
+    }
+    tasks += [task1, task2]
   }
 }
 
 extension ViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return todoList.count
+    return tasks.count
   }
+  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel?.text = todoList[indexPath.row].title
-    print("cell", cell)
-    return cell
-  }
-}
-
-extension ViewController: TapSaveDelegate {
-  func didTapForSave(title: String) {
-    todoList.append(ModelT(title: title))
-    tableView.reloadData()
-  }
-}
-
-extension ViewController: UITableViewDelegate {
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-    if (editingStyle == UITableViewCell.EditingStyle.delete) {
-      //
-      print("██░░░ -- L\(#line) ⭐️⭐️ delete ⭐️⭐️\n")
-      todoList.remove(at: indexPath.row)
-      tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-//      todos.removeAtIndex(indexPath.row)
-//      tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+    let cellIdentifier = "TaskTableViewCell"
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TaskTableViewCell else {
+      fatalError("the dequeued cell is not an instance of TaskTableViewCell")
     }
+    // fetch the appropriate
+    let task = tasks[indexPath.row]
+    cell.nameLabel.text = task.name
+    return cell
   }
 }
