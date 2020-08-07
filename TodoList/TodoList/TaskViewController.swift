@@ -75,7 +75,18 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   }
   @IBAction func cancelAction(_ sender: UIBarButtonItem) {
     print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-    dismiss(animated: true, completion: nil)
+    
+    // depending on style of presentation ( modal or push presentation , this vie< controller needs to be dismessed in two different ways
+    let isPressentingInAddTaskMode = presentingViewController is UINavigationController
+    
+    if (isPressentingInAddTaskMode) {
+      dismiss(animated: true, completion: nil)
+    } else if let owningNavigationController = navigationController {
+      owningNavigationController.popViewController(animated: true)
+    } else {
+      fatalError("the taskViewController is not inside a navigation controller")
+    }
+        
   }
   private func updateSaveButtonState() {
     print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
