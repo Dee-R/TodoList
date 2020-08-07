@@ -57,7 +57,7 @@
                     <navigationItem key="navigationItem" title="List of Task" id="4k4-2F-vHj">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="FUq-v5-bwx">
                             <connections>
-                                <segue destination="F55-zH-p9e" kind="show" id="iAX-Td-mIw"/>
+                                <segue destination="bbj-09-wB4" kind="presentation" identifier="AddItem" id="iAX-Td-mIw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -74,16 +74,16 @@
             </objects>
             <point key="canvasLocation" x="1992.8" y="137.18140929535232"/>
         </scene>
-        <!--Task View Controller-->
+        <!--New Task-->
         <scene sceneID="gjR-vU-Iid">
             <objects>
                 <viewController storyboardIdentifier="TaskViewController" id="F55-zH-p9e" customClass="TaskViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c9j-Zv-xX5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To do Task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CKz-pk-K2X">
-                                <rect key="frame" x="16" y="64" width="343" height="34"/>
+                                <rect key="frame" x="16" y="76" width="343" height="34"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -97,14 +97,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ciS-xq-imV"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Kqn-yo-Mue"/>
+                    <navigationItem key="navigationItem" title="New Task" id="Kqn-yo-Mue">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="D2I-MU-gHR"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="Wms-cG-o5b"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="nameTextField" destination="CKz-pk-K2X" id="hnT-jH-uzH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayN-cr-ztN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2824.8000000000002" y="136.28185907046478"/>
+            <point key="canvasLocation" x="3764" y="136.28185907046478"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fkd-eB-1aN">
@@ -123,6 +126,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOw-0C-pul" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1053.5999999999999" y="137.18140929535232"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YYy-UK-lCW">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bbj-09-wB4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ETM-NK-sfQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F55-zH-p9e" kind="relationship" relationship="rootViewController" id="g7L-a2-Afd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ceF-Pa-xz5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2824.8000000000002" y="136.28185907046478"/>
         </scene>
     </scenes>
 </document>
