@@ -16,6 +16,8 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   
   var task: Task?
   @IBOutlet weak var saveButton: UIBarButtonItem!
+  @IBOutlet weak var cancelButton: UIBarButtonItem!
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -55,7 +57,9 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     textField.resignFirstResponder()
     return true
   }
-  
+  @IBAction func cancelAction(_ sender: UIBarButtonItem) {
+    dismiss(animated: true, completion: nil)
+  }
   private func updateSaveButtonState() {
     // Disable the save button if the text fields is empty
     let text = nameTextField.text ?? ""

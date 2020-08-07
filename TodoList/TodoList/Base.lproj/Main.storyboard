@@ -98,7 +98,11 @@
                         <viewLayoutGuide key="safeArea" id="ciS-xq-imV"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Task" id="Kqn-yo-Mue">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="D2I-MU-gHR"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="D2I-MU-gHR">
+                            <connections>
+                                <action selector="cancelAction:" destination="F55-zH-p9e" id="NEy-sI-3hG"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="Wms-cG-o5b">
                             <connections>
                                 <segue destination="AMA-w6-iEY" kind="unwind" unwindAction="unwindToTaskListWithSender:" id="WPx-oZ-XeZ"/>
@@ -106,6 +110,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="D2I-MU-gHR" id="J8F-OT-13g"/>
                         <outlet property="nameTextField" destination="CKz-pk-K2X" id="hnT-jH-uzH"/>
                         <outlet property="saveButton" destination="Wms-cG-o5b" id="rjW-1P-QjC"/>
                     </connections>
