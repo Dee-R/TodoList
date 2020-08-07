@@ -10,6 +10,9 @@ import UIKit
 import os.log
 
 class TaskViewController: UIViewController, UITextFieldDelegate {
+  private var showClass: String {
+    return String(describing: type(of: self))
+  }
   
   // MARK: - Properties
   @IBOutlet weak var nameTextField: UITextField!
@@ -28,8 +31,10 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   
   // MARK: - Navigation
   // Configure the destination view controller only whe the save button is pressed.
+  // prepare(_ :,_: ) is called before any segue gets executed
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     super.prepare(for: segue, sender: sender)
+    
     // verify is sender is a button (sender as? UIBarButtonItem)
     // check if the object referenced is same with saveButton object (button === saveButton)
     guard let button = sender as? UIBarButtonItem, button === saveButton else {
@@ -45,22 +50,26 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   }
   
   public func textFieldDidBeginEditing(_ textField: UITextField) {
-    os_log("begind", log: OSLog.default, type: .debug)
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     saveButton.isEnabled = false
   }
   func textFieldDidEndEditing(_ textField: UITextField) {
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     updateSaveButtonState()
     navigationItem.title = textField.text
   }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     textField.resignFirstResponder()
     return true
   }
   @IBAction func cancelAction(_ sender: UIBarButtonItem) {
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     dismiss(animated: true, completion: nil)
   }
   private func updateSaveButtonState() {
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     // Disable the save button if the text fields is empty
     let text = nameTextField.text ?? ""
     saveButton.isEnabled = !text.isEmpty

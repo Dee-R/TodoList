@@ -37,6 +37,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="nameLabel" destination="PXo-yx-NKc" id="Tuf-g6-3ys"/>
+                                            <segue destination="F55-zH-p9e" kind="show" identifier="ShowDetail" id="hnO-Nb-Nzj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -72,18 +73,18 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1992.8" y="137.18140929535232"/>
+            <point key="canvasLocation" x="2169" y="371"/>
         </scene>
         <!--New Task-->
         <scene sceneID="gjR-vU-Iid">
             <objects>
                 <viewController storyboardIdentifier="TaskViewController" id="F55-zH-p9e" customClass="TaskViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c9j-Zv-xX5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To do Task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CKz-pk-K2X">
-                                <rect key="frame" x="16" y="76" width="343" height="34"/>
+                                <rect key="frame" x="16" y="64" width="343" height="34"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -118,7 +119,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayN-cr-ztN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="AMA-w6-iEY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3764" y="136.28185907046478"/>
+            <point key="canvasLocation" x="3750" y="370"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fkd-eB-1aN">
@@ -136,7 +137,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOw-0C-pul" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1053.5999999999999" y="137.18140929535232"/>
+            <point key="canvasLocation" x="1319" y="370"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YYy-UK-lCW">
@@ -154,7 +155,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ceF-Pa-xz5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2824.8000000000002" y="136.28185907046478"/>
+            <point key="canvasLocation" x="2962" y="17"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="hnO-Nb-Nzj"/>
+    </inferredMetricsTieBreakers>
 </document>
