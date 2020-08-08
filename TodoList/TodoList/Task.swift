@@ -27,3 +27,21 @@ class Task{
     self.name = name
   }
 }
+
+
+/**
+ Core data : 5 classes 3 files
+ NSManagedObjectModel
+ NSPersistentStoreCoordinator
+ NSManagedObjectContext
+ NSManagedObject
+ NSPersistentContainer
+ --
+ DataModel.xcdatamodeld
+ DataModel.momd
+ DataModel.sqlite
+ 
+ **
+ ManagedObjectModel : model
+ PersistentStoreCoordinator : touche à la base de donnée directement.
+ */

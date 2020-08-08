@@ -8,13 +8,20 @@
 
 import UIKit
 import os.log
+import CoreData
+
 
 class ViewController:UIViewController {
+  
+  
   @IBOutlet weak var tableView: UITableView!
   var tasks = [Task]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    
+    
     loadSampleMeals()
     
     // edit button item provided by the table viewController
