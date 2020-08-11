@@ -10,30 +10,29 @@ import UIKit
 import CoreData
 import os.log
 
-class TaskViewController: UIViewController, UITextFieldDelegate {
+class TaskViewController: UIViewController {
+  
+  // MARK: - 🉑 Setting
   private var showClass: String {
     return String(describing: type(of: self))
   }
-  
-  // MARK: - Properties
   @IBOutlet weak var nameTextField: UITextField!
-  
-//  var task: Task?
-  var task: NSManagedObject?
+  var task: NSManagedObject? // Model
   @IBOutlet weak var saveButton: UIBarButtonItem!
   @IBOutlet weak var cancelButton: UIBarButtonItem!
   
-  
+  // MARK: - ✅ Cycle Life
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
     nameTextField.delegate = self
     
+    print("( ˘ ³˘)💙 ▓ \(#line) ▓ verifie task quand add  new entry : \(task)")
+    
     // edit all the field if edit
     if let task = task {
-//      navigationItem.title = task.name
-//      nameTextField.text = task.name
-      print("( ˘ ³˘)💙 ▓ \(#line) ▓ task : \(task)")
+      //      navigationItem.title = task.name
+      //      nameTextField.text = task.name
       navigationItem.title = task.value(forKey: "title") as? String
       nameTextField.text = task.value(forKey: "title") as? String
     }
@@ -41,6 +40,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     // action state for textfield
     updateSaveButtonState()
   }
+  
   
   // MARK: - Navigation
   // Configure the destination view controller only whe the save button is pressed.
@@ -55,34 +55,26 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
       return
     }
     
-    // nil coalescing value is used to return the value of an optional if it is nil
     let name = nameTextField.text ?? ""
     
-    // set the task to be passed to ViewController after the unwind segue.
-    task?.setValue(name, forKey: "title")
-    
-    saveCoreData(object: task)
-    
+    if task == nil {
+      //** Add Mode mode
+      print("( ˘ ³˘)💙 ▓ \(#line)▓ /\(showClass).\(#function)/ Message : task nil = \(task)")
+      insertCoredata(title: name)
+      
+
+    } else {
+      //** Edition mode
+      // nil coalescing value is used to return the value of an optional if it is nil
+//      let name = nameTextField.text ?? ""
+      // set the task to be passed to ViewController after the unwind segue.
+      task?.setValue(name, forKey: "title")
+      saveCoreData(object: task)
+    }
   }
   
-  public func textFieldDidBeginEditing(_ textField: UITextField) {
-    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-    saveButton.isEnabled = false
-  }
-  func textFieldDidEndEditing(_ textField: UITextField) {
-    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-    updateSaveButtonState()
-    navigationItem.title = textField.text
-  }
-  
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-    textField.resignFirstResponder()
-    return true
-  }
+  // MARK: - 🖐 Handle U
   @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-    
-    
     // depending on style of presentation ( modal or push presentation , this vie< controller needs to be dismessed in two different ways
     let isPressentingInAddTaskMode = presentingViewController is UINavigationController
     
@@ -93,27 +85,26 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     } else {
       fatalError("the taskViewController is not inside a navigation controller")
     }
-        
   }
+  
+  // MARK: - 💻 Own F
   private func updateSaveButtonState() {
-    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-    
     // Disable the save button if the text fields is empty
     let text = nameTextField.text ?? ""
     saveButton.isEnabled = !text.isEmpty
   }
 }
 
-
-
 // CoreData
 extension TaskViewController {
   func saveCoreData(object:NSManagedObject?) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return } // appDele
     let context  = appDelegate.persistentContainer.viewContext //// manageContext
-   
+    
     guard let obj = object  else {
-      fatalError("object:NSManagedObject is nil")
+//      fatalError("object:NSManagedObject is nil")
+      print("  💟🐝\(#line)💟▓▒░ task ░▒▓💟",task,"💟")
+      return
     }
     
     do {
@@ -121,7 +112,39 @@ extension TaskViewController {
     } catch let error as NSError {
       print(error, error.userInfo)
     }
-   
+    
+  }
+  func insertCoredata(title: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    
+    let managedObjectContext = appDelegate.persistentContainer.viewContext //managedObjectContext
+    let task = TaskX1(context: managedObjectContext) // object himself
+    task.setValue(title, forKey: "title") // setting
+    do {
+      try managedObjectContext.save()  // save
+    } catch let error as NSError {
+      print("could not save \(error), \(error.userInfo)")
+    }
   }
 }
+
+// MARK: - 👑 DELEGATE
+// Delegation TextField
+extension TaskViewController: UITextFieldDelegate {
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    saveButton.isEnabled = false
+  }
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    updateSaveButtonState()
+    navigationItem.title = textField.text
+  }
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+}
+
+
 
