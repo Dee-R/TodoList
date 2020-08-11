@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import os.log
 
 class TaskViewController: UIViewController, UITextFieldDelegate {
@@ -17,7 +18,8 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   // MARK: - Properties
   @IBOutlet weak var nameTextField: UITextField!
   
-  var task: Task?
+//  var task: Task?
+  var task: NSManagedObject?
   @IBOutlet weak var saveButton: UIBarButtonItem!
   @IBOutlet weak var cancelButton: UIBarButtonItem!
   
@@ -28,11 +30,13 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     nameTextField.delegate = self
     
     // edit all the field if edit
+    print("  💟 tasktask \(task) 💟")
     if let task = task {
       print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
       os_log("edit variableTask on text field and title navigation bar", log: OSLog.default, type: .debug)
-      navigationItem.title = task.name
-      nameTextField.text = task.name
+//      navigationItem.title = task.name
+//      nameTextField.text = task.name
+      
     }
     
     updateSaveButtonState()
@@ -55,7 +59,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     let name = nameTextField.text ?? ""
     
     // set the task to be passed to ViewController after the unwind segue.
-    task = Task(name: name)
+//    task = Task(name: name)
   }
   
   public func textFieldDidBeginEditing(_ textField: UITextField) {

@@ -12,6 +12,9 @@ import CoreData
 
 
 class ViewController:UIViewController {
+  private var showClass: String {
+    return String(describing: type(of: self))
+  }
   
   
   @IBOutlet weak var tableView: UITableView!
@@ -20,12 +23,12 @@ class ViewController:UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // fetche Coredata
+    
     // fetch all the data in the table view
     fetcheCoredata()
       
     
-    loadSampleMeals()
+    //loadSampleMeals()
     
     // edit button item provided by the table viewController
     navigationItem.leftBarButtonItem = editButtonItem
@@ -50,17 +53,24 @@ class ViewController:UIViewController {
       // edit mode
       if let selectedIndexPath = tableView.indexPathForSelectedRow {
         os_log("edit mode", log: OSLog.default, type: .debug)
-        tasks[selectedIndexPath.row] = task
+//        tasks[selectedIndexPath.row] = task
         tableView.reloadRows(at: [selectedIndexPath], with: UITableView.RowAnimation.none)
+        
       } else {
         // Add mode
         os_log("add mode", log: OSLog.default, type: .debug)
-        let newIndexPath = IndexPath(row: tasks.count, section: 0)
-        tasks.append(task)
-        tableView.insertRows(at: [newIndexPath], with: UITableView.RowAnimation.automatic)
+        _ = IndexPath(row: tasksTasks.count, section: 0)
+        
+        // here
+//        insert(task.name)
+//        tasks.append(task)
+        
+//        tableView.insertRows(at: [newIndexPath], with: UITableView.RowAnimation.automatic)
+//        self.saveCoreData(name: task.name ?? "")
+        
         
         // SAVE IN CORE DATA
-        self.saveCoreData(name:"coucou")
+        
       }
     }
   }
@@ -74,22 +84,33 @@ class ViewController:UIViewController {
       os_log("button '+' clicked : AddItem", log: OSLog.default, type: .debug)
       
     case "ShowDetail":
-      print("██░░░ -- L\(#line) ⭐️⭐️ Show prepare for segue ⭐️⭐️\n")
-      os_log("row clicked: ShowDetail ", log: OSLog.default, type: .debug)
+//      os_log("line 87 ShowDetail from viewcontroller to TaskViewController", log: OSLog.default, type: .debug)
+////      os_log("row clicked: ShowDetail ", log: OSLog.default, type: .debug)
       guard let taskDetailsViewController = segue.destination as? TaskViewController else {
         fatalError("unexpected destination \(segue.destination)")
       }
-      
+////
       guard let selectedTaskCell = sender as? TaskTableViewCell else {
         fatalError("unexpected sender")
       }
-      
+//
+      print("  💟🐝\(#line)💟▓▒░ expediteur sender ░▒▓💟",sender,"💟")
+//
       guard let indexPath = tableView.indexPath(for: selectedTaskCell) else {
         fatalError("the selected cell is not beign displayed by the table")
       }
+//
+      print("  💟🐝\(#line)💟▓▒░ indexPath ░▒▓💟",indexPath,"💟")
+//
+////
+//      let selectedTask = tasks[indexPath.row]
+//      taskDetailsViewController.task = selectedTask // send all information about the row on edit operation to TaskViewController in the var 'task'.
       
-      let selectedTask = tasks[indexPath.row]
-      taskDetailsViewController.task = selectedTask // send all information about the row on edit operation to TaskViewController in the var 'task'.
+      let selectedTask = tasksTasks[indexPath.row]
+      taskDetailsViewController.task = selectedTask
+      // STOP HERE 🚦🌁🏝☀️🏖🐬🏝🏞🏜🚦
+      
+//      updateCoreData(at: indexPath)
     
     default:
       fatalError("Segue Identification is nil")
@@ -100,7 +121,7 @@ class ViewController:UIViewController {
 extension ViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //    return tasks.count
-        return tasksTasks.count
+    return tasksTasks.count
   }
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cellIdentifier = "TaskTableViewCell"
@@ -123,8 +144,15 @@ extension ViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       // Delete the row
-      tasks.remove(at: indexPath.row)
-      tableView.deleteRows(at: [indexPath], with: .fade)
+//      tasks.remove(at: indexPath.row)
+//      tableView.deleteRows(at: [indexPath], with: .fade)
+      // STOP HERE 🚦🌁🏝☀️🏖🐬🏝🏞🏜🚦
+
+      
+      deleteCoreData(at: indexPath)
+      
+      
+      
      
     } else if editingStyle == .insert {
       // create a new instance of the appropiate class, insert it into the array and ad a new row to the table.
@@ -139,6 +167,7 @@ extension ViewController: UITableViewDelegate {
 extension ViewController {
   // Core Data
   func saveCoreData(name: String) {
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     // appdelegate
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -154,19 +183,23 @@ extension ViewController {
     
     // set data
     let task = TaskX1(context: managedContext)
-    task.setValue("Manger", forKey: "title")
+    task.setValue(name, forKey: "title")
     
     // commit di try catch
     do {
       try managedContext.save()
       tasksTasks.append(task)
-      print("  💟🐝\(#line)💟▓▒░ task ░▒▓💟",task,"💟")
+      
+      print("  💟🐝\(#line)💟▓▒░ task----- ░▒▓💟",task,"💟")
       tableView.reloadData()
+      
+      
     } catch let error as NSError {
       print("could not save. \(error), \(error.userInfo)")
     }
+    os_log("end save in saveCoreData line 172", log: OSLog.default, type: .debug)
   }
-  func  fetcheCoredata() {
+  func fetcheCoredata() {
     // appdelegate
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
@@ -180,12 +213,55 @@ extension ViewController {
     do {
       tasksTasks = try managedContext.fetch(fetchRequest)
       
-      print("  💟🐝\(#line)💟▓▒░ tasksTasks ░▒▓💟",tasksTasks.count,"💟")
+//      print("  💟🐝\(#line)💟▓▒░ tasksTasks ░▒▓💟",tasksTasks.count,"💟")
+//      print("  💟🐝\(#line)💟▓▒░ tasksTasks ░▒▓💟",tasksTasks,"💟")
       
     } catch let error as NSError {
       print("could not fetch \(error) , \(error.userInfo)")
     }
     
   }
+  func insertCoredata(title: String) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    
+    let managedObjectContext = appDelegate.persistentContainer.viewContext //managedObjectContext
+    let task = TaskX1(context: managedObjectContext) // object himself
+    task.setValue(title, forKey: "title") // setting
+    do {
+      try managedObjectContext.save()  // save
+      tasksTasks.append(task) // stiock in the array
+      tableView.reloadData() //
+    } catch let error as NSError {
+      print("could not save \(error), \(error.userInfo)")
+    }
+    
+  }
+  func deleteCoreData(at index: IndexPath){
+    
+    //CoreData Delete
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+    let managedContext = appDelegate.persistentContainer.viewContext // managedObjectContext
+    do {
+      managedContext.delete(tasksTasks[index.row])
+      tasksTasks.remove(at: index.row)
+      
+      try managedContext.save()
+    } catch let error as NSError {
+      print(error)
+      print(error.userInfo)
+      fatalError("Deletion is not save in the manager object")
+    }
+    tableView.deleteRows(at: [index], with: UITableView.RowAnimation.fade)
+    
+    
+  }
+//  func updateCoreData(at index: IndexPath) {
+//    let selectedTask = tasksTasks[index.row]
+//  }
+  
   
 }
