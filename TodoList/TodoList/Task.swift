@@ -6,6 +6,7 @@
 //  Copyright © 2020 Eddy R. All rights reserved.
 //
 import Foundation
+import CoreData
 class Task{
   // MARK: - Properties
   var name:String?

@@ -30,15 +30,15 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     nameTextField.delegate = self
     
     // edit all the field if edit
-    print("  💟 tasktask \(task) 💟")
     if let task = task {
-      print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-      os_log("edit variableTask on text field and title navigation bar", log: OSLog.default, type: .debug)
 //      navigationItem.title = task.name
 //      nameTextField.text = task.name
-      
+      print("( ˘ ³˘)💙 ▓ \(#line) ▓ task : \(task)")
+      navigationItem.title = task.value(forKey: "title") as? String
+      nameTextField.text = task.value(forKey: "title") as? String
     }
     
+    // action state for textfield
     updateSaveButtonState()
   }
   
@@ -47,7 +47,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   // prepare(_ :,_: ) is called before any segue gets executed
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     super.prepare(for: segue, sender: sender)
-    
+    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
     // verify is sender is a button (sender as? UIBarButtonItem)
     // check if the object referenced is same with saveButton object (button === saveButton)
     guard let button = sender as? UIBarButtonItem, button === saveButton else {
@@ -59,7 +59,10 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     let name = nameTextField.text ?? ""
     
     // set the task to be passed to ViewController after the unwind segue.
-//    task = Task(name: name)
+    task?.setValue(name, forKey: "title")
+    
+    saveCoreData(object: task)
+    
   }
   
   public func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -78,7 +81,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     return true
   }
   @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-    print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
+    
     
     // depending on style of presentation ( modal or push presentation , this vie< controller needs to be dismessed in two different ways
     let isPressentingInAddTaskMode = presentingViewController is UINavigationController
@@ -94,10 +97,31 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
   }
   private func updateSaveButtonState() {
     print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
+    
     // Disable the save button if the text fields is empty
     let text = nameTextField.text ?? ""
     saveButton.isEnabled = !text.isEmpty
   }
 }
 
+
+
+// CoreData
+extension TaskViewController {
+  func saveCoreData(object:NSManagedObject?) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return } // appDele
+    let context  = appDelegate.persistentContainer.viewContext //// manageContext
+   
+    guard let obj = object  else {
+      fatalError("object:NSManagedObject is nil")
+    }
+    
+    do {
+      try context.save()
+    } catch let error as NSError {
+      print(error, error.userInfo)
+    }
+   
+  }
+}
 

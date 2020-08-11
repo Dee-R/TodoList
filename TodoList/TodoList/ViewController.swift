@@ -53,6 +53,8 @@ class ViewController:UIViewController {
       // edit mode
       if let selectedIndexPath = tableView.indexPathForSelectedRow {
         os_log("edit mode", log: OSLog.default, type: .debug)
+        print("( ˘ ³˘)💙 ▓ \(#line) ▓ task from TaskViewController.task", task.value(forKey: "title"))
+
 //        tasks[selectedIndexPath.row] = task
         tableView.reloadRows(at: [selectedIndexPath], with: UITableView.RowAnimation.none)
         
@@ -94,13 +96,13 @@ class ViewController:UIViewController {
         fatalError("unexpected sender")
       }
 //
-      print("  💟🐝\(#line)💟▓▒░ expediteur sender ░▒▓💟",sender,"💟")
-//
+      print("( ˘ ³˘)💙 ▓ \(#line) ▓ sender expediteur : \(sender)")
+
       guard let indexPath = tableView.indexPath(for: selectedTaskCell) else {
         fatalError("the selected cell is not beign displayed by the table")
       }
 //
-      print("  💟🐝\(#line)💟▓▒░ indexPath ░▒▓💟",indexPath,"💟")
+      
 //
 ////
 //      let selectedTask = tasks[indexPath.row]
