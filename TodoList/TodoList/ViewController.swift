@@ -17,19 +17,13 @@ class ViewController:UIViewController {
     return String(describing: type(of: self))
   }
   @IBOutlet weak var tableView: UITableView!
-  var tasks = [Task]()
   var tasksTasks : [NSManagedObject] = []
   
   // MARK: - ✅ Cycle Life
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     // fetch all the data in the table view
     fetcheCoredata()
-    
-    
-    //loadSampleMeals()
-    
     // edit button item provided by the table viewController
     navigationItem.leftBarButtonItem = editButtonItem
   }
@@ -37,36 +31,23 @@ class ViewController:UIViewController {
   // MARK: - 🖐 Handle U
   @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
     print(" ▓ \(#line) ▓   (っ˘▽˘)っ ▓ \(showClass) ▓ ⊂(◕。◕⊂)  ( ˘ ³˘)♥ ▓ \(#function) ▓ ")
-    
     // destination viewController, source TaskViewController,
-    print("( ˘ ³˘)💙 ▓ \(#line)▓ /\(showClass).\(#function)/ Message : unwindToTakeList \(sender.destination)", sender.source, sender.identifier)
-    if let sourceViewController = sender.source as? TaskViewController, let task = sourceViewController.task {
-      print("██░░░ -- L\(#line) ⭐️⭐️ A ⭐️⭐️\n")
-//      if ((tableView!.indexPathForSelectedRow ) != nil) {
-//        print("██░░░ -- L\(#line) ⭐️⭐️ A1 ⭐️⭐️\n")
-//      }
-      
+    
+    if let sourceViewController = sender.source as? TaskViewController, let _ = sourceViewController.task {
       // edit mode
       if let selectedIndexPath = tableView.indexPathForSelectedRow {
         print("( ˘ ³˘)💙 ▓ \(#line)▓ /\(showClass).\(#function)/ Message : EDITION MODE")
         tableView.reloadRows(at: [selectedIndexPath], with: UITableView.RowAnimation.none)
-      } else {
-        print("coca cola")
       }
-      
     } else {
         fetcheCoredata()
         tableView.reloadData()
     }
-    
-
   }
 
   // MARK: - 💻 Own F
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     super.prepare(for: segue, sender: sender)
-
-    print("  💟🐝\(#line)💟▓▒░ segue.identifier ░▒▓💟",segue.identifier,"💟")
     
     switch (segue.identifier ?? "") {
     case "AddItem":

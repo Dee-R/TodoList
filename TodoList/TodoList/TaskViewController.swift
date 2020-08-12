@@ -26,21 +26,14 @@ class TaskViewController: UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
     nameTextField.delegate = self
-    
-    print("( ˘ ³˘)💙 ▓ \(#line) ▓ verifie task quand add  new entry : \(task)")
-    
     // edit all the field if edit
     if let task = task {
-      //      navigationItem.title = task.name
-      //      nameTextField.text = task.name
       navigationItem.title = task.value(forKey: "title") as? String
       nameTextField.text = task.value(forKey: "title") as? String
     }
-    
     // action state for textfield
     updateSaveButtonState()
   }
-  
   
   // MARK: - Navigation
   // Configure the destination view controller only whe the save button is pressed.
@@ -56,13 +49,9 @@ class TaskViewController: UIViewController {
     }
     
     let name = nameTextField.text ?? ""
-    
     if task == nil {
       //** Add Mode mode
-      print("( ˘ ³˘)💙 ▓ \(#line)▓ /\(showClass).\(#function)/ Message : task nil = \(task)")
       insertCoredata(title: name)
-      
-
     } else {
       //** Edition mode
       // nil coalescing value is used to return the value of an optional if it is nil
@@ -101,11 +90,11 @@ extension TaskViewController {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return } // appDele
     let context  = appDelegate.persistentContainer.viewContext //// manageContext
     
-    guard let obj = object  else {
-//      fatalError("object:NSManagedObject is nil")
-      print("  💟🐝\(#line)💟▓▒░ task ░▒▓💟",task,"💟")
-      return
-    }
+//    guard let obj = object  else {
+////      fatalError("object:NSManagedObject is nil")
+//      print("  💟🐝\(#line)💟▓▒░ task ░▒▓💟",task,"💟")
+//      return
+//    }
     
     do {
       try context.save()
@@ -145,6 +134,3 @@ extension TaskViewController: UITextFieldDelegate {
     return true
   }
 }
-
-
-
